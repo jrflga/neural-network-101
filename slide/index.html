@@ -7,7 +7,7 @@
 		<title>Neural Network 101</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/solarized.css">
+		<link rel="stylesheet" href="css/theme/blood.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -20,12 +20,183 @@
 			link.href = window.location.search.match(/print-pdf/gi) ? "css/print/pdf.css" : "css/print/paper.css";
 			document.getElementsByTagName("head")[0].appendChild(link);
 		</script>
+		<style type="text/css">
+			.reveal li { font-size: 0.9em; text-align: left; }
+			.reveal p {font-size: 0.9em; }
+		</style>
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<h2>Neural Network 101</h2>
+				</section>
+
+				<section>
+					<h2>Intro</h2>
+				</section>
+
+				<section>
+					<p>A Neural Network is an <strong>Universal Approximator</strong> or, to say with different words, a flexible function that autonomously adapts its behaviour to satisfy as much as possible the relation between the number[s] passed to it as parameter[s] and the number[s] expected to be returned as relative result[s].</p>
+				</section>
+
+				<section id="fragments">
+					<h2>Neuron</h2>
+					<img src="images/bio_neuron.png">
+					<ul>
+						<li>Inputs (Dendrites)</li>
+						<li>Processor (Cell nucleus)</li>
+						<li>Output (Axon)</li>
+					</ul>
+				</section>
+
+				<section>
+					<img src="images/neuron_basic.png">
+					<p> The neuron accumulates all incoming inputs, multiply by respective weights and sum all results.
+						If it's in a certain threshold, it fires an output. </p>
+				</section>
+
+				<section>
+					<img src="images/neuron_basic_explained.png">
+				</section>
+				<section>
+					<img src="images/neuron_basic_explained2.png">
+				</section>
+				<section>
+					<img src="images/neuron_basic_explained3.png">
+				</section>
+
+				<section>
+					<h2>Activation function</h2>
+				</section>
+				<section>
+					<img src="images/activation_function.png">
+					<ul>
+						<li>Used to <strong>non-linear</strong> behavior.</li>
+						<li> Receive an output and normalizes it (between 0 and 1). </li>
+						<li> Usually it's a sigmoid function. </li>
+					</ul>
+				</section>
+				<section>
+					<h2>Feed-Foward Network</h2>
+				</section>
+				<section>
+					<img src="images/feedfoward.png" width="550px">
+					<p>The output from input layer serves as an input for the next layer (hidden layer). It's repeated until reaching
+					   the final layer (output layer).</p>
+				</section>
+				<section>
+					<h2>How a NN learn? <strong>TRAINING!</strong></h2>
+				</section>
+				<section>
+					<h3><strong>Backpropagation</strong> algorithm</h3>
+				</section>
+				<section>
+					<h3>Algorithm process:</h3>
+					<ul>
+						<li>Input -> Output</li>
+						<li>Then teach what should have been the correct output.</li>
+						<li>Adjusting the weights with the ideal output.</li>
+						<li>Start from output layer to input layer (reverse path).</li>
+						<li>Insert same input, but the weights are adjusted.</li>
+						<li>Repeat this process until the delta between ideal output and network output is small enough.</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Gradient Descent</h2>
+				</section>
+				<section>
+					<img src="images/sgd_optimal.png">
+					<p>	
+				    Calculate "slope" at current "x" position;
+				    Change x by the negative of the slope. (x = x - slope);
+				    Repeat until slope value is zero (slope == 0).
+					</p>
+				</section>
+				<section>
+					<h3>Problem: Local minimums</h3>
+					<img src="images/sgd_local_min.png">
+				</section>
+				<section>
+					<img src="images/sgd_rand.png">
+				</section>
+				<section>
+					<h2>CODE!</h2>
+				</section>
+				<section>
+					<h3>Training for XOR</h3>
+					<pre><code class="hljs" data-trim contenteditable>
+						var synaptic = require("synaptic");
+
+						// Create layers
+						var inputLayer = new synaptic.Layer(2);
+						var hiddenLayer1 = new synaptic.Layer(4);
+						var hiddenLayer2 = new synaptic.Layer(4);
+						var outputLayer = new synaptic.Layer(1);
+
+						// Create weights connections
+						inputLayer.project(hiddenLayer1);
+						hiddenLayer1.project(hiddenLayer2);
+						hiddenLayer2.project(outputLayer);
+					</code></pre>
+				</section>
+				<section>
+					<pre><code class="hljs" data-trim contenteditable>
+						// Assemble the network
+						var myNetwork = new synaptic.Network({
+						    input: inputLayer,
+						    hidden: [
+						        hiddenLayer1,
+						        hiddenLayer2
+						    ],
+						    output: outputLayer
+						});
+					</code></pre>
+				</section>
+				<section>
+					<pre><code class="hljs" data-trim contenteditable>
+						// Defining our trainer
+						var trainer = new synaptic.Trainer(myNetwork);
+						var trainingSet = [
+							{ input: [0, 0], output: [0] },
+							{ input: [0, 1], output: [1] },
+							{ input: [1, 0], output: [1] },
+							{ input: [1, 1], output: [0] }
+						      
+						];
+					</code></pre>
+				</section>
+				<section>
+					<pre><code class="hljs" data-trim contenteditable>
+						// Training!
+						trainer.train(
+						    trainingSet,
+						    {
+						        rate: .3, // Learning rate
+						        iterations: 1000000, // Maximum number of Iterations
+						        error: .0000005, // Minimum error
+						        shuffle: true, // Shuffled after every iter.
+						        cost: synaptic.Trainer.cost.MSE, // Self-explained
+						        log: 1 // console.log the error and iter
+						    }
+						);
+					</code></pre>
+				</section>
+				<section>
+					<pre><code class="hljs" data-trim contenteditable>
+						// Test!
+						console.log("[0, 0] => [" + myNetwork.activate([0, 0]) + "]");
+						console.log("[0, 1] => [" + myNetwork.activate([0, 1]) + "]");
+						console.log("[1, 0] => [" + myNetwork.activate([1, 0]) + "]");
+						console.log("[1, 1] => [" + myNetwork.activate([1, 1]) + "]");
+					</code></pre>
+				</section>
+				<section>
+					<img src="images/screen.gif">
+				</section>
+				<section>
+					<h1>END</h1>
+				</section>
 			</div>
 		</div>
 		<script src="lib/js/head.min.js"></script>
