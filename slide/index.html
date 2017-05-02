@@ -23,108 +23,154 @@
 		<style type="text/css">
 			.reveal li { font-size: 0.9em; text-align: left; }
 			.reveal p {font-size: 0.9em; }
+			html.intro body {
+				background:url("images/background.jpg");
+				background-position:center;
+				background-size: 100%;
+
+			}
 		</style>
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>
+				<section data-state="intro">
 					<h2>Neural Network 101</h2>
 				</section>
 
-				<section>
-					<h2>Intro</h2>
+				<section data-state="intro">
+					<h2>Introdução</h2>
 				</section>
 
-				<section>
-					<p>A Neural Network is an <strong>Universal Approximator</strong> or, to say with different words, a flexible function that autonomously adapts its behaviour to satisfy as much as possible the relation between the number[s] passed to it as parameter[s] and the number[s] expected to be returned as relative result[s].</p>
+				<section data-state="intro">
+					<!--<p>A Neural Network is an <strong>Universal Approximator</strong> or, to say with different words, a flexible function that autonomously adapts its behaviour to satisfy as much as possible the relation between the number[s] passed to it as parameter[s] and the number[s] expected to be returned as relative result[s].</p>-->
+					<p> Uma rede neural é uma <b><i>Universal Approximator</i></b> ou, em outras palavras, uma função altamente flexível
+					que, automaticamente, consegue adaptar seu comportamento de modo a satisfazer a relação entre os dados passados como
+					parâmetros e os dados esperados como resultado relativo.</p>
 				</section>
 
-				<section id="fragments">
+				<section data-state="intro">
 					<h2>Neuron</h2>
 					<img src="images/bio_neuron.png">
 					<ul>
-						<li>Inputs (Dendrites)</li>
-						<li>Processor (Cell nucleus)</li>
-						<li>Output (Axon)</li>
+						<li>Inputs (Dendritos)</li>
+						<li>Processador (Núcleo celular)</li>
+						<li>Output (Axônio)</li>
 					</ul>
 				</section>
 
-				<section>
+				<section data-state="intro">
 					<img src="images/neuron_basic.png">
-					<p> The neuron accumulates all incoming inputs, multiply by respective weights and sum all results.
-						If it's in a certain threshold, it fires an output. </p>
+					<!--<p> The neuron accumulates all incoming inputs, multiply by respective weights and sum all results.
+						If it's in a certain threshold, it fires an output. </p>-->
+						<p>O neurônio armazena os inputs, multiplica pelos respectivos pesos (<strong>weights</strong>) e soma
+						todos os resultados de cada operação. Se estiver dentro de um certo limite, ele libera o output.</p>
 				</section>
 
-				<section>
+				<section data-state="intro">
 					<img src="images/neuron_basic_explained.png">
 				</section>
-				<section>
+				<section data-state="intro">
 					<img src="images/neuron_basic_explained2.png">
 				</section>
-				<section>
+				<section data-state="intro">
 					<img src="images/neuron_basic_explained3.png">
 				</section>
 
-				<section>
-					<h2>Activation function</h2>
+				<section data-state="intro">
+					<h2>Função de Ativação</h2>
 				</section>
-				<section>
+				<section data-state="intro">
 					<img src="images/activation_function.png">
 					<ul>
-						<li>Used to <strong>non-linear</strong> behavior.</li>
-						<li> Receive an output and normalizes it (between 0 and 1). </li>
-						<li> Usually it's a sigmoid function. </li>
+						<li>Usada para um comportamento <strong>não-linear</strong>.</li>
+						<li> Recebe um input para normalizar o output (entre 0 e 1). </li>
+						<li> Geralmente é uma função sigmóide. </li>
 					</ul>
 				</section>
-				<section>
-					<h2>Feed-Foward Network</h2>
+				<section data-state="intro">
+					<h2>Feedfoward Network</h2>
 				</section>
-				<section>
+				<section data-state="intro">
 					<img src="images/feedfoward.png" width="550px">
-					<p>The output from input layer serves as an input for the next layer (hidden layer). It's repeated until reaching
-					   the final layer (output layer).</p>
+					<!--<p>The output from input layer serves as an input for the next layer (hidden layer). It's repeated until reaching
+					   the final layer (output layer).</p>-->
+					<p>Os outputs da camada de input serve de input para as próximas camadas (camada escondida). Esse processo é repetio
+					até atingir a última camada (camada de output).</p>
 				</section>
-				<section>
-					<h2>How a NN learn? <strong>TRAINING!</strong></h2>
+				<section data-state="intro">
+					<h3>Então como a RN aprende? TREINANDO!</h3>
 				</section>
-				<section>
-					<h3><strong>Backpropagation</strong> algorithm</h3>
+				<section data-state="intro">
+					<h3>Algoritmo de <strong>Backpropagation</strong></h3>
 				</section>
-				<section>
-					<h3>Algorithm process:</h3>
+				<section data-state="intro">
+					<h3>Etapas do algoritmo:</h3>
 					<ul>
-						<li>Input -> Output</li>
-						<li>Then teach what should have been the correct output.</li>
-						<li>Adjusting the weights with the ideal output.</li>
-						<li>Start from output layer to input layer (reverse path).</li>
-						<li>Insert same input, but the weights are adjusted.</li>
-						<li>Repeat this process until the delta between ideal output and network output is small enough.</li>
+						<li>Input -> Output;</li>
+						<li>Depois disso, ele ensina qual deveria ser o verdadeiro output;</li>
+						<li>Ajusta os pesos de acordo com o output ideal;</li>
+						<li>Começa da camada de output até a camada de input (caminho reverso);</li>
+						<li>Então testa o mesmo input, mas agora com os pesos ajustados;</li>
+						<li>Repete o processo até o delta entre o output ideal e o output da rede neural seja pequeno o suficiente.</li>
 					</ul>
 				</section>
-				<section>
+				<section data-state="intro">
 					<h2>Gradient Descent</h2>
 				</section>
-				<section>
+				<section data-state="intro">
 					<img src="images/sgd_optimal.png">
-					<p>	
-				    Calculate "slope" at current "x" position;
-				    Change x by the negative of the slope. (x = x - slope);
-				    Repeat until slope value is zero (slope == 0).
-					</p>
+					<ul>
+						<li>Calcula a inclinação (<strong>slope</strong>) no na posição atual do X;</li>
+						<li>Muda o X pela inclinação negativa (<strong>x = x - slope</strong>);</li>
+						<li>Repete até a inclinação ser zero (<strong>slope == 0</strong>);</li>
+					</ul>
 				</section>
-				<section>
-					<h3>Problem: Local minimums</h3>
+				<section data-state="intro">
+					<h3>Problema: Poços locais</h3>
 					<img src="images/sgd_local_min.png">
 				</section>
-				<section>
+				<section data-state="intro">
 					<img src="images/sgd_rand.png">
 				</section>
-				<section>
-					<h2>CODE!</h2>
+				<section data-state="intro">
+					<h2>CODE TIME!</h2>
 				</section>
-				<section>
-					<h3>Training for XOR</h3>
+				<section data-state="intro">
+					<h3>Treinando para um XOR</h3>
+					<table>
+						<thead>
+							<tr>
+								<th>Input</th>
+								<th>Input</th>
+								<th>Output</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+							</tr>
+							<tr>
+								<td>0</td>
+								<td>1</td>
+								<td>1</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>0</td>
+								<td>1</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>1</td>
+								<td>0</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+				<section data-state="intro">
 					<pre><code class="hljs" data-trim contenteditable>
 						var synaptic = require("synaptic");
 
@@ -140,7 +186,7 @@
 						hiddenLayer2.project(outputLayer);
 					</code></pre>
 				</section>
-				<section>
+				<section data-state="intro">
 					<pre><code class="hljs" data-trim contenteditable>
 						// Assemble the network
 						var myNetwork = new synaptic.Network({
@@ -153,7 +199,7 @@
 						});
 					</code></pre>
 				</section>
-				<section>
+				<section data-state="intro">
 					<pre><code class="hljs" data-trim contenteditable>
 						// Defining our trainer
 						var trainer = new synaptic.Trainer(myNetwork);
@@ -166,7 +212,7 @@
 						];
 					</code></pre>
 				</section>
-				<section>
+				<section data-state="intro">
 					<pre><code class="hljs" data-trim contenteditable>
 						// Training!
 						trainer.train(
@@ -182,7 +228,7 @@
 						);
 					</code></pre>
 				</section>
-				<section>
+				<section data-state="intro">
 					<pre><code class="hljs" data-trim contenteditable>
 						// Test!
 						console.log("[0, 0] => [" + myNetwork.activate([0, 0]) + "]");
@@ -191,10 +237,10 @@
 						console.log("[1, 1] => [" + myNetwork.activate([1, 1]) + "]");
 					</code></pre>
 				</section>
-				<section>
+				<section data-state="intro">
 					<img src="images/screencast.gif">
 				</section>
-				<section>
+				<section data-state="intro">
 					<h1>END</h1>
 				</section>
 			</div>
